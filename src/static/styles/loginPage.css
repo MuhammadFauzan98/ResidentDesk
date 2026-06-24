@@ -1,0 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=Ancizar+Sans:ital,wght@0,100..1000;1,100..1000&display=swap');
+
+body{
+    height: 90vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3rem;
+}
+
+.input-container{
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    gap: 0.5rem;
+}
+
+
+/* tablet screens */
+@media only screen and (max-width: 768px){
+    
+}

@@ -1,0 +1,32 @@
+{% extends "flatownerDashboardLayout.html" %}
+
+{% block main %}
+
+<div class="main-block">
+    <h1>Payment History for Flat {{ flat_number }}</h1>
+
+    {% if payments %}
+    <table>
+        <tr>
+            <th>Month</th>
+            <th>Year</th>
+            <th>Amount</th>
+            <th>Status</th>
+            <th>Paid On</th>
+        </tr>
+        {% for p in payments %}
+        <tr>
+            <td>{{ p.month|capitalize }}</td>
+            <td>{{ p.year }}</td>
+            <td>₹{{ p.amount }}</td>
+            <td>{{ p.status or 'Not Marked' }}</td>
+            <td>{{ p.paid_on or 'N/A' }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% else %}
+        <p>No payment records available.</p>
+    {% endif %}
+</div>
+
+{% endblock %}

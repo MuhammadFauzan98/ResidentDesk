@@ -1,0 +1,75 @@
+{% extends "adminDashboardLayout.html" %}
+
+{% block main %}
+
+    <div class="main-block">
+
+        <h1>Flat Owners</h1>
+
+        <form action="/manage-owners" method="post">
+            <h2>Create a new user</h2>
+
+            <div>
+                <label>username</label>
+                <input name="username" placeholder="enter username" autocomplete="off" required>
+            </div>
+
+            <div>
+                <label>password</label>
+                <input name="password" type="password" placeholder="enter password" autocomplete="off" required>
+            </div>
+
+            <input type="submit">
+        </form>
+
+        <br><br><br>
+
+        <form action="/delete-user" method="post">
+            <h2>Delete a user account</h2>
+
+            <div>
+                <label>select user to delete</label>
+                <select name="username" required>
+                    <option value="" disabled selected>username</option>
+                    {% for user in users %}
+                        <option value="{{ user.name }}">{{ user.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <input type="submit">
+        </form>
+
+        <br><br><br>
+        
+        <table border="1" cellpadding="8" cellspacing="0">
+            <tr>
+                <th>id</th>
+                <th>name</th>
+                <th>email</th>
+                <th>phone number</th>
+            </tr>
+            {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.name }}</td>
+
+                {% if user.email == None %}
+                    <td>N/A</td>
+                {% else %}
+                    <td>{{ user.email }}</td>
+                {% endif %}
+
+                {% if user.phone == None %}
+                    <td>N/A</td>
+                {% else %}
+                    <td>{{ user.phone }}</td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </table>
+
+
+    </div>
+
+{% endblock %}

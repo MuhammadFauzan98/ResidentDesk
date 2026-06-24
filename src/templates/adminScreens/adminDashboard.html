@@ -1,0 +1,36 @@
+{% extends "adminDashboardLayout.html" %}
+
+{% block main %}
+
+<div class="main-block">
+    <h2>Admin Dashboard Summary</h2>
+
+    <div>
+        <p><strong>Total Flats:</strong> {{ total_flats }}</p>
+        <p><strong>Payments Due:</strong> {{ payments_due }}</p>
+    </div>
+
+    <h3>Recent Receipt Uploads</h3>
+    <table border="1" cellpadding="8" cellspacing="0">
+        <tr>
+            <th>Receipt ID</th>
+            <th>Flat Number</th>
+            <th>Month</th>
+            <th>Year</th>
+            <th>Amount</th>
+            <th>Uploaded At</th>
+        </tr>
+        {% for receipt in recent_uploads %}
+        <tr>
+            <td>{{ receipt.id }}</td>
+            <td>{{ receipt.flat_number }}</td>
+            <td>{{ receipt.month|capitalize }}</td>
+            <td>{{ receipt.year }}</td>
+            <td>₹{{ receipt.amount }}</td>
+            <td>{{ receipt.uploaded_at }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
+{% endblock %}

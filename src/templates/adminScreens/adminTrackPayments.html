@@ -1,0 +1,46 @@
+{% extends "adminDashboardLayout.html" %}
+
+{% block main %}
+
+    <div class="main-block">
+        <h1>Payments</h1>
+
+        <form action="/track-payments" method="post">
+            <div>
+                <label>select flat number</label>
+                <input type="number" name="flatnumber" min="1" required>
+            </div>
+
+            <div>
+                <label>select month</label>
+                <select name="month" required>
+                    <option value="january">January</option>
+                    <option value="february">February</option>
+                    <option value="march">March</option>
+                    <option value="april">April</option>
+                    <option value="may">May</option>
+                    <option value="june">June</option>
+                    <option value="july">July</option>
+                    <option value="august">August</option>
+                    <option value="september">September</option>
+                    <option value="october">October</option>
+                    <option value="november">November</option>
+                    <option value="december">December</option>
+                </select>
+            </div>
+
+            <div>
+                <label>year</label>
+                <input type="number" name="year" min="2020" required>
+            </div>
+
+            <input type="submit" value="check status">
+        </form>
+
+        {% if res %}
+            <p>status : {{ res.status }}</p>
+            <button onclick="window.open('/static/receipts/{{ filename }}')">receipt</button>
+        {% endif %}
+    </div>
+
+{% endblock %}

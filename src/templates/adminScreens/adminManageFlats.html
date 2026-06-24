@@ -1,0 +1,72 @@
+{% extends "adminDashboardLayout.html" %}
+
+{% block main %}
+
+    <div class="main-block">
+        <h1>Flats</h1>
+
+        <form action="/manage-flats" method="post">
+            <h2>Add new flat details</h2>
+
+            <div>
+                <label>flat number</label>
+                <input name="flatNumber" type="number" autocomplete="off" required>
+            </div>
+
+            <div>
+                <label>floor number</label>
+                <input name="floor" type="number" autocomplete="off" required>
+            </div>
+
+            <input type="submit">
+        </form>
+
+        <br><br><br>
+
+        <form action="/assign-owner" method="post">
+            <h2>Assign Flat to Owner</h2>
+        
+            <div>
+                <label>Flat ID</label>
+                <input name="flat_id" type="number" required>
+            </div>
+        
+            <div>
+                <label>Owner User ID</label>
+                <input name="user_id" type="number" required>
+            </div>
+        
+            <div>
+                <label>Start Date</label>
+                <input name="start_date" type="date" required>
+            </div>
+        
+            <input type="submit" value="Assign Owner">
+        </form>
+
+        <br><br><br>
+        
+        <table border="1" cellpadding="8" cellspacing="0">
+            <tr>
+                <th>flat id</th>
+                <th>flat number</th>
+                <th>floor number</th>
+                <th>status</th>
+                <th>owner name</th>
+                <th>owner number</th>
+            </tr>
+            {% for flat in flats %}
+            <tr>
+                <td>{{ flat.id }}</td>
+                <td>{{ flat.flatnumber }}</td>
+                <td>{{ flat.floor }}</td>
+                <td>{{ flat.status }}</td>
+                <td>{{ flat.owner }}</td>
+                <td>{{ flat.phone }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+
+    </div>
+
+{% endblock %}
