@@ -2,8 +2,53 @@
 
 {% block main %}
 
-<div class="main-block">
+<div class="main-block dashboard-page">
     <h1>Dashboard</h1>
+
+    {% if flat_info %}
+        <div class="dashboard-card">
+            <div class="dashboard-card__header">
+                <div>
+                    <p class="dashboard-eyebrow">Current ownership</p>
+                    <h2>Your Owned Flat</h2>
+                </div>
+                <span class="dashboard-badge">{{ flat_info.status }}</span>
+            </div>
+
+            <table class="dashboard-table">
+                <tbody>
+                    <tr>
+                        <th>Flat ID</th>
+                        <td>{{ flat_info.flat_id }}</td>
+                    </tr>
+                    <tr>
+                        <th>Flat Number</th>
+                        <td>{{ flat_info.flat_number }}</td>
+                    </tr>
+                    <tr>
+                        <th>Block</th>
+                        <td>{{ flat_info.block if flat_info.block is not none else 'N/A' }}</td>
+                    </tr>
+                    <tr>
+                        <th>Floor</th>
+                        <td>{{ flat_info.floor if flat_info.floor is not none else 'N/A' }}</td>
+                    </tr>
+                    <tr>
+                        <th>Status</th>
+                        <td>{{ flat_info.status }}</td>
+                    </tr>
+                    <tr>
+                        <th>Ownership Started</th>
+                        <td>{{ flat_info.start_date or 'N/A' }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="dashboard-card">
+            <p>No active flat ownership found for your account.</p>
+        </div>
+    {% endif %}
 </div>
 
 {% endblock %}

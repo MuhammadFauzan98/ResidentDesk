@@ -8,7 +8,7 @@ body{
 
     color: black;
     font-family: "Ancizar sans", sans-serif;
-    background-color: #f0f0f0;
+    background: linear-gradient(180deg, #f4f6fb 0%, #eef1f8 100%);
 }
 
 navbar{
@@ -60,8 +60,99 @@ navbar ul li a:hover{
 
 .main-block{
     margin-left: 15vw;
-    width: 100vw - 14vw;
-    padding: 0.5rem;
+    width: calc(100vw - 15vw);
+    min-height: 100vh;
+    box-sizing: border-box;
+    padding: 1.75rem 2rem 2rem;
+}
+
+.dashboard-page{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.dashboard-card{
+    width: min(860px, 100%);
+    background: linear-gradient(180deg, #ffffff 0%, #fdfdff 100%);
+    border: 1px solid rgba(68, 68, 134, 0.12);
+    border-left: 6px solid rgb(68, 68, 134);
+    border-radius: 20px;
+    box-shadow: 0 16px 36px rgba(31, 35, 64, 0.08);
+    padding: 1.6rem 1.75rem 1.5rem;
+}
+
+.dashboard-card__header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.1rem;
+}
+
+.dashboard-eyebrow{
+    margin: 0 0 0.35rem;
+    font-size: 0.8rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #667085;
+}
+
+.dashboard-card h2{
+    margin: 0;
+    font-size: 1.8rem;
+    color: #182033;
+}
+
+.dashboard-badge{
+    display: inline-flex;
+    align-items: center;
+    padding: 0.45rem 0.8rem;
+    border-radius: 999px;
+    background: rgba(68, 68, 134, 0.12);
+    color: rgb(68, 68, 134);
+    font-weight: 700;
+    text-transform: capitalize;
+    white-space: nowrap;
+}
+
+.dashboard-table{
+    width: 100%;
+    margin-top: 0.5rem;
+    border-collapse: collapse;
+    background: transparent;
+    box-shadow: none;
+}
+
+.dashboard-table tbody tr:nth-child(odd){
+    background: rgba(68, 68, 134, 0.03);
+}
+
+.dashboard-table th,
+.dashboard-table td{
+    border: none;
+    border-bottom: 1px solid rgba(31, 35, 64, 0.08);
+    padding: 0.95rem 1rem;
+    text-align: left;
+    vertical-align: top;
+}
+
+.dashboard-table th{
+    width: 38%;
+    color: #5a637c;
+    font-weight: 700;
+}
+
+.dashboard-table td{
+    color: #1b2235;
+    font-weight: 600;
+}
+
+.dashboard-card p{
+    margin: 0;
+    color: #30364f;
+    font-size: 1rem;
 }
 
 .logout{
@@ -89,7 +180,9 @@ navbar ul li a:hover{
 
 h1{
     text-align: left;
-    font-size: 3rem;
+    font-size: 2.5rem;
+    margin: 0;
+    color: #182033;
 }
 
 form {
@@ -161,6 +254,43 @@ table th {
 }
 
 @media screen and (max-width: 600px) {
+
+    .main-block{
+        width: 100vw;
+        margin-left: 0;
+        padding: 1rem;
+    }
+
+    .dashboard-card{
+        width: 100%;
+        padding: 1rem;
+        border-radius: 14px;
+    }
+
+    .dashboard-card__header{
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .dashboard-card h2{
+        font-size: 1.4rem;
+    }
+
+    .dashboard-table th,
+    .dashboard-table td{
+        display: block;
+        width: 100%;
+        padding: 0.45rem 0;
+    }
+
+    .dashboard-table tr{
+        display: block;
+        padding: 0.35rem 0;
+    }
+
+    .dashboard-table tbody tr:nth-child(odd){
+        background: transparent;
+    }
 
     form div {
         flex-direction: column;

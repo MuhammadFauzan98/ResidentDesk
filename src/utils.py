@@ -14,8 +14,8 @@ def login_required(f):
 
 
 def db_connection():
-    BASE_DIR = os.path.abspath(os.path.dirname("database.db"))
-    connection = sqlite3.connect(os.path.join(BASE_DIR, "database.db"))
+    base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
+    connection = sqlite3.connect(os.path.join(base_dir, "database.db"))
     connection.row_factory = sqlite3.Row
     return connection
 

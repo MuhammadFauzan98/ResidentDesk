@@ -83,7 +83,7 @@ def manageOwners():
 
 
 # route to delete flat owners (used by the delete user form in manage owners page)
-@admin.route('/delete-user', methods=["GET", "POST"])
+@admin.route('/delete-user', methods=["POST"])
 @login_required
 def deleteUser():
     if request.method == "POST":
@@ -94,6 +94,8 @@ def deleteUser():
         
         cursor.execute("DELETE FROM users WHERE name = ?", (username,))
         dbcon.commit()
+        cursor.close()
+        dbcon.close()
 
         flash(f"success: user {username} successfully deleted")
         return redirect("/manage-owners")
@@ -231,7 +233,7 @@ def assign_owner():
 def uploadReceipts():
     if request.method == "POST":
         flat_id = request.form.get("flatid")
-        month = request.form.get("month").lower()
+        month = (request.form.get("month") or "").lower()
         year = request.form.get("year")
         amount = request.form.get("amount")
         file = request.files.get("file")
@@ -260,7 +262,7 @@ def uploadReceipts():
             save_path = os.path.join(UPLOAD_FOLDER, secure_filename(filename))
             file.save(save_path)
 
-            file_path = f"/static/receipts/{filename}"
+            file_path = f"/static/receipts/{secure_filename(filename)}"
 
             # Insert into receipts table
             cursor.execute("""
@@ -274,13 +276,8 @@ def uploadReceipts():
                 amount,
                 session['user_id']  # replace with session['user_id'] if session works
             ))
-            db.commit()
-            
-            dbcon = db_connection()
-            cursor = dbcon.cursor()
 
-            cursor.execute("SELECT id FROM receipts WHERE file_path = ?", (save_path,))
-            receipt_id = cursor.fetchall()[0]['id']
+            receipt_id = cursor.lastrowid
             status = "pending"
 
             cursor.execute("""
@@ -288,7 +285,7 @@ def uploadReceipts():
                 VALUES (?,?)
             """, (receipt_id, status))
 
-            dbcon.commit()
+            db.commit()
             flash("Receipt uploaded successfully.")
 
         except Exception as e:
@@ -332,9 +329,19 @@ def trackPayments():
                 AND receipts.year = ?;
         """, (flatnumber, month, year,))
 
-        res = cursor.fetchall()[0]
+        res = cursor.fetchone()
+
+        if not res:
+            cursor.close()
+            db.close()
+            flash("No payment record found for the selected flat and period.")
+            return redirect("/track-payments")
+
         flat_id = res['flat_id']
         filename = f"{flat_id}_{month}_{year}.pdf"
+
+        cursor.close()
+        db.close()
 
         return render_template("adminScreens/adminTrackPayments.html", res=res, filename=filename)
     else:

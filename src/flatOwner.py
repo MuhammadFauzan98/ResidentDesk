@@ -11,7 +11,37 @@ flatOwner = Blueprint('flatOwner', __name__)
 @flatOwner.route('/dashboard')
 @login_required
 def dashboard():
-    return render_template("flatownerScreens/dashboard.html")
+    user_id = session.get("user_id")
+
+    db = db_connection()
+    db.row_factory = sqlite3.Row
+    cursor = db.cursor()
+
+    cursor.execute("""
+        SELECT
+            f.id AS flat_id,
+            f.flat_number,
+            f.BLOCK AS block,
+            f.FLOOR AS floor,
+            f.STATUS AS status,
+            fo.start_date,
+            fo.end_date
+        FROM flat_owners fo
+        JOIN flats f ON fo.flat_id = f.id
+        WHERE fo.user_id = ? AND fo.end_date IS NULL
+        ORDER BY fo.start_date DESC
+        LIMIT 1
+    """, (user_id,))
+
+    flat_info = cursor.fetchone()
+
+    cursor.close()
+    db.close()
+
+    if not flat_info:
+        flash("You are not currently assigned to a flat.")
+
+    return render_template("flatownerScreens/dashboard.html", flat_info=flat_info)
 
 
 # ----------------------------- PAYMENT HISTORY --------------------------------
@@ -74,7 +104,7 @@ def announcements():
 
 # ----------------------------- PROFILE --------------------------------
 
-@flatOwner.route("/profile")
+@flatOwner.route("/profile", methods=["GET", "POST"])
 @login_required
 def profile():
     user_id = session.get("user_id")
